@@ -248,6 +248,8 @@ public class Aplikacja
                 }*/
             }
         }
+        OutBtmp.UnlockBits(DataOutBtmp);
+        btmp.UnlockBits(DataBtmp);
 
         return btmp;
     }
