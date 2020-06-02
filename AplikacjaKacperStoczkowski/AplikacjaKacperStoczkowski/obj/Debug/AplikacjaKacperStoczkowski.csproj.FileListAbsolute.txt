@@ -1,0 +1,10 @@
+C:\Users\stocz\Desktop\Aplikacja\AplikacjaKacperStoczkowski\AplikacjaKacperStoczkowski\bin\Debug\AplikacjaKacperStoczkowski.exe.config
+C:\Users\stocz\Desktop\Aplikacja\AplikacjaKacperStoczkowski\AplikacjaKacperStoczkowski\bin\Debug\AplikacjaKacperStoczkowski.exe
+C:\Users\stocz\Desktop\Aplikacja\AplikacjaKacperStoczkowski\AplikacjaKacperStoczkowski\bin\Debug\AplikacjaKacperStoczkowski.pdb
+C:\Users\stocz\Desktop\Aplikacja\AplikacjaKacperStoczkowski\AplikacjaKacperStoczkowski\obj\Debug\AplikacjaKacperStoczkowski.csprojAssemblyReference.cache
+C:\Users\stocz\Desktop\Aplikacja\AplikacjaKacperStoczkowski\AplikacjaKacperStoczkowski\obj\Debug\AplikacjaKacperStoczkowski.Form1.resources
+C:\Users\stocz\Desktop\Aplikacja\AplikacjaKacperStoczkowski\AplikacjaKacperStoczkowski\obj\Debug\AplikacjaKacperStoczkowski.Properties.Resources.resources
+C:\Users\stocz\Desktop\Aplikacja\AplikacjaKacperStoczkowski\AplikacjaKacperStoczkowski\obj\Debug\AplikacjaKacperStoczkowski.csproj.GenerateResource.cache
+C:\Users\stocz\Desktop\Aplikacja\AplikacjaKacperStoczkowski\AplikacjaKacperStoczkowski\obj\Debug\AplikacjaKacperStoczkowski.csproj.CoreCompileInputs.cache
+C:\Users\stocz\Desktop\Aplikacja\AplikacjaKacperStoczkowski\AplikacjaKacperStoczkowski\obj\Debug\AplikacjaKacperStoczkowski.exe
+C:\Users\stocz\Desktop\Aplikacja\AplikacjaKacperStoczkowski\AplikacjaKacperStoczkowski\obj\Debug\AplikacjaKacperStoczkowski.pdb
