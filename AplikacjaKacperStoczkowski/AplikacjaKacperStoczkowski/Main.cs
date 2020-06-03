@@ -4,8 +4,46 @@ using System.Runtime.CompilerServices;
 using System.Drawing.Imaging;
 using System.Linq;
 
+
+
 public class Aplikacja
 {
+    int[] A0 = new int[] { 3, 6, 7, 12, 14, 15, 24, 28, 30,
+            31, 48, 56, 60, 62, 63, 96, 112, 120,
+            124, 126, 127, 129, 131, 135, 143, 159,
+            191, 192, 193, 195, 199, 207, 223, 224,
+            225, 227, 231, 239, 240, 241, 243, 247,
+            248, 249, 251, 252, 253, 254 };
+
+    int[] A1 = new int[] { 7, 14, 28, 56, 112, 131, 193, 224 };
+
+    int[] A2 = new int[] { 7, 14, 15, 28, 30, 56, 60, 112, 120, 131, 135, 193, 195, 224, 225, 240 };
+
+    int[] A3 = new int[] { 7, 14, 15, 28, 30, 31, 56, 60, 62, 112, 120, 124, 131, 135, 143, 193, 195, 199, 224, 225, 227, 240, 241, 248 };
+
+    int[] A4 = new int[] {7, 14, 15, 28, 30, 31, 56, 60, 62,
+            63, 112, 120, 124, 126, 131, 135, 143,
+            159, 193, 195, 199, 207, 224, 225, 227,
+            231, 240, 241, 243, 248, 249, 252};
+
+    int[] A5 = new int[] {7, 14, 15, 28, 30, 31, 56, 60,
+            62, 63, 112, 120, 124, 126, 131, 135,
+            143, 159, 191, 193, 195, 199, 207, 224,
+            225, 227, 231, 239, 240, 241, 243, 248, 249, 251, 252, 254};
+
+    int[] Apxl = new int[] {3, 6, 7, 12, 14, 15, 24, 28, 30,
+            31, 48, 56, 60, 62, 63, 96, 112, 120,
+            124, 126, 127, 129, 131, 135, 143, 159,
+            191, 192, 193, 195, 199, 207, 223, 224,
+            225, 227, 231, 239, 240, 241, 243, 247,
+            248, 249, 251, 252, 253, 254};
+
+    bool changed = true;
+
+    Bitmap dupa;
+    Bitmap dupa2;
+    Bitmap dupa3;
+
     public struct Rgb
     {
         public byte b, g, r;
@@ -32,7 +70,7 @@ public class Aplikacja
         }
     }
 
-    public static Bitmap Binarization(Bitmap btmp)
+    public Bitmap Binarization(Bitmap btmp)
     {
         int width = btmp.Width;
         int height = btmp.Height;
@@ -55,7 +93,7 @@ public class Aplikacja
         return btmp;
     }
 
-    public static int Weight(Bitmap btmp, int i, int j)
+    public int Weight(Bitmap btmp, int i, int j)
     {
         int weight = 0;
         if (btmp.GetPixel(i - 1, j).R > 0) weight += 1;
@@ -70,187 +108,89 @@ public class Aplikacja
         return weight;
     }
 
-    public static Bitmap Thinning(Bitmap btmp)
+    public Bitmap Faz0(Bitmap btmp)
     {
-        bool changed = false;
+        int height = btmp.Height;
+        int width = btmp.Width;
 
-        int[] A0 = new int[] { 3, 6, 7, 12, 14, 15, 24, 28, 30,
-            31, 48, 56, 60, 62, 63, 96, 112, 120,
-            124, 126, 127, 129, 131, 135, 143, 159,
-            191, 192, 193, 195, 199, 207, 223, 224,
-            225, 227, 231, 239, 240, 241, 243, 247,
-            248, 249, 251, 252, 253, 254 };
-
-        int[] A1 = new int[] { 7, 14, 28, 56, 112, 131, 193, 224 };
-
-        int[] A2 = new int[] { 7, 14, 15, 28, 30, 56, 60, 112, 120, 131, 135, 193, 195, 224, 225, 240 };
-
-        int[] A3 = new int[] { 7, 14, 15, 28, 30, 31, 56, 60, 62, 112, 120, 124, 131, 135, 143, 193, 195, 199, 224, 225, 227, 240, 241, 248 };
-
-        int[] A4 = new int[] {7, 14, 15, 28, 30, 31, 56, 60, 62,
-            63, 112, 120, 124, 126, 131, 135, 143,
-            159, 193, 195, 199, 207, 224, 225, 227,
-            231, 240, 241, 243, 248, 249, 252};
-
-        int[] A5 = new int[] {7, 14, 15, 28, 30, 31, 56, 60,
-            62, 63, 112, 120, 124, 126, 131, 135,
-            143, 159, 191, 193, 195, 199, 207, 224,
-            225, 227, 231, 239, 240, 241, 243, 248, 249, 251, 252, 254};
-
-        int[] Apxl = new int[] {3, 6, 7, 12, 14, 15, 24, 28, 30,
-            31, 48, 56, 60, 62, 63, 96, 112, 120,
-            124, 126, 127, 129, 131, 135, 143, 159,
-            191, 192, 193, 195, 199, 207, 223, 224,
-            225, 227, 231, 239, 240, 241, 243, 247,
-            248, 249, 251, 252, 253, 254};
-
-        int wysokosc = btmp.Height;
-        int szerokosc = btmp.Width;
-
-        Bitmap OutBtmp = new Bitmap(szerokosc, wysokosc, PixelFormat.Format24bppRgb);
-
-        BitmapData DataBtmp = btmp.LockBits(new Rectangle(0, 0, szerokosc, wysokosc), ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
-        BitmapData DataOutBtmp = OutBtmp.LockBits(new Rectangle(0, 0, szerokosc, wysokosc), ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
-
-        int strideWe = DataBtmp.Stride;
-        int strideWy = DataOutBtmp.Stride;
-
-        IntPtr scanWe = DataBtmp.Scan0;
-        IntPtr scanWy = DataOutBtmp.Scan0;
-
-        int r = 1;
-
-        Rgb black = new Rgb() { r = 0, g = 0, b = 0 };
-        Rgb white = new Rgb() { r = 255, g = 255, b = 255 };
-        Rgb red = new Rgb() { r = 255, g = 0, b = 0 };
-
-        unsafe
+        for (int x = 1; x < width - 1; x++)                  //Faza 0
         {
-            while(changed == true)
+            for (int y = 1; y < height - 1; y++)
             {
-                for (int y = r; y < wysokosc - r; y++)              //Faza 0 - oznaczanie granic
+                Color c = btmp.GetPixel(x, y);
+                if (c.R > 0)
                 {
-                    byte* pWe = (byte*)(void*)scanWe + y * strideWe;
-                    byte* pWy = (byte*)(void*)scanWy + y * strideWy;
-
-                    for (int x = r; x < szerokosc - r; x++)
+                    if (this.A0.Contains(this.Weight(btmp, x, y)))
                     {
-                        Rgb pikselAnalizowany = ((Rgb*)pWe)[x];
-
-                        if (pikselAnalizowany.r == 0 && pikselAnalizowany.g == 0 && pikselAnalizowany.b == 0)       //Sprawdzic czy to musi byc spelnione
-                        {
-                            for (int y0 = y - r; y0 <= y + r; y0++)
-                            {
-                                byte* pOtoczenie = (byte*)(void*)scanWe + y0 * strideWe;
-                                for (int x0 = x - r; x0 <= x + r; x0++)
-                                {
-                                    Rgb pikselOtoczenia = ((Rgb*)pOtoczenie)[x0];
-                                    if (A0.Contains(Weight(btmp, x0, y0)))
-                                    {
-                                        pikselAnalizowany = red;
-                                    }
-
-                                }
-                            }
-                        }
+                        btmp.SetPixel(x, y, Color.FromArgb(c.A, 2, 2, 2));
                     }
                 }
-                /*
-                for (int y = r; y < wysokosc - r; y++)                  //Faza 1-5 sprawdzanie granicznych pikseli
-                {
-                    byte* pWe = (byte*)(void*)scanWe + y * strideWe;    //SPRAWDZIĆ
-                    byte* pWy = (byte*)(void*)scanWy + y * strideWy;    //SPRAWDZIĆ
-
-                    for (int x = r; x < szerokosc - r; x++)
-                    {
-                        Rgb pikselAnalizowany = ((Rgb*)pWe)[x];                                             //SPRAAWDZIĆ
-
-                        if (pikselAnalizowany.r == 0 && pikselAnalizowany.g == 0 && pikselAnalizowany.b == 0)   //SPRAWDZIĆ
-                        {
-                            for (int y0 = y - r; y0 <= y + r; y0++)
-                            {
-                                byte* pOtoczenie = (byte*)(void*)scanWe + y0 * strideWe;        //SPRAAWDZIĆ
-                                for (int x0 = x - r; x0 <= x + r; x0++)
-                                {
-                                    if (btmp.GetPixel(x0, y0) == Color.Red)
-                                    {
-                                        switch (Weight(btmp, x0, y0))
-                                        {
-                                            case 1:
-                                                if (A1.Contains(Weight(btmp, x0, y0)))
-                                                {
-                                                    btmp.SetPixel(x0, y0, Color.White);
-                                                    changed = true;
-                                                }
-                                                break;
-                                            case 2:
-                                                if (A2.Contains(Weight(btmp, x0, y0)))
-                                                {
-                                                    btmp.SetPixel(x0, y0, Color.White);
-                                                    changed = true;
-                                                }
-                                                break;
-                                            case 3:
-                                                if (A3.Contains(Weight(btmp, x0, y0)))
-                                                {
-                                                    btmp.SetPixel(x0, y0, Color.White);
-                                                    changed = true;
-                                                }
-                                                break;
-                                            case 4:
-                                                if (A4.Contains(Weight(btmp, x0, y0)))
-                                                {
-                                                    btmp.SetPixel(x0, y0, Color.White);
-                                                    changed = true;
-                                                }
-                                                break;
-                                            case 5:
-                                                if (A5.Contains(Weight(btmp, x0, y0)))
-                                                {
-                                                    btmp.SetPixel(x0, y0, Color.White);
-                                                    changed = true;
-                                                }
-                                                break;
-                                            default:
-                                                break;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                */ /*
-                for (int y = r; y < wysokosc - r; y++)              //Faza 6 - same punkty
-                {
-                    byte* pWe = (byte*)(void*)scanWe + y * strideWe;    //SPRAAWDZIĆ
-                    byte* pWy = (byte*)(void*)scanWy + y * strideWy;    //SPRAAWDZIĆ
-
-                    for (int x = r; x < szerokosc - r; x++)
-                    {
-                        Rgb pikselAnalizowany = ((Rgb*)pWe)[x];         //SPRAAWDZIĆ
-
-                        if (pikselAnalizowany.r == 0 && pikselAnalizowany.g == 0 && pikselAnalizowany.b == 0)       //Sprawdzic czy to musi byc spelnione
-                        {
-                            for (int y0 = y - r; y0 <= y + r; y0++)
-                            {
-                                byte* pOtoczenie = (byte*)(void*)scanWe + y0 * strideWe;        //SPRAAWDZIĆ
-                                for (int x0 = x - r; x0 <= x + r; x0++)
-                                {
-                                    if (Apxl.Contains(Weight(btmp, x0, y0)))
-                                    {
-                                        btmp.SetPixel(x0, y0, Color.White);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }*/
             }
         }
-        OutBtmp.UnlockBits(DataOutBtmp);
-        btmp.UnlockBits(DataBtmp);
 
         return btmp;
+    }
+
+    public Bitmap Faz1(Bitmap btmp)
+    {
+        bool changed = true;
+
+        int height = btmp.Height;
+        int width = btmp.Width;
+
+        for (int x = 1; x < width - 1; x++)                  //Faza 1-5
+        {
+            for (int y = 1; y < height - 1; y++)
+            {
+                Color c = btmp.GetPixel(x, y);
+                if (c.R == 2)
+                {
+
+                    int waga = this.Weight(btmp, x, y);
+                    if(this.A1.Contains(waga))
+                    {
+                        btmp.SetPixel(x, y, Color.White);
+                        changed = true;
+                    }
+
+                    if (this.A2.Contains(waga))
+                    {
+                        btmp.SetPixel(x, y, Color.White);
+                        changed = true;
+                    }
+
+                    if (this.A3.Contains(waga))
+                    {
+                        btmp.SetPixel(x, y, Color.White);
+                        changed = true;
+                    }
+
+                    if (this.A4.Contains(waga))
+                    {
+                        btmp.SetPixel(x, y, Color.White);
+                        changed = true;
+                    }
+
+                    if (this.A5.Contains(waga))
+                    {
+                        btmp.SetPixel(x, y, Color.White);
+                        changed = true;
+                    }
+                }
+            }
+        }
+        return btmp;
+    }
+
+    public Bitmap Thinning(Bitmap btmp)
+    {
+        
+        while (this.changed) 
+        {
+            this.changed = false;
+            this.dupa = this.Faz0(btmp);
+            this.dupa2 = this.Faz1(dupa);
+        }
+        return this.dupa2;
     }
 }

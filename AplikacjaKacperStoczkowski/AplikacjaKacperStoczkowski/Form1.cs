@@ -43,14 +43,15 @@ namespace AplikacjaKacperStoczkowski
 
         private void binaryzacjaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Bitmap NewImage = Aplikacja.Binarization((Bitmap)pictureBox1.Image);
-            pictureBox2.Image = NewImage;
+            //Bitmap NewImage = Aplikacja.Binarization((Bitmap)pictureBox1.Image);
+            //pictureBox2.Image = NewImage;
         }
 
         private void szkieletyzacjaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Bitmap NewImage = Aplikacja.Binarization((Bitmap)pictureBox1.Image);
-            Bitmap poSzkieletyzacji = Aplikacja.Thinning(NewImage);
+            Aplikacja obj = new Aplikacja();
+            Bitmap NewImage = obj.Binarization((Bitmap)pictureBox1.Image);
+            Bitmap poSzkieletyzacji = obj.Thinning(NewImage);
             pictureBox2.Image = poSzkieletyzacji;
         }
     }
