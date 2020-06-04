@@ -44,7 +44,7 @@ public class Aplikacja
     Bitmap dupa2;
     Bitmap dupa3;
 
-    public struct Rgb
+    /*public struct Rgb
     {
         public byte b, g, r;
         public Rgb Add(int parametr)
@@ -68,7 +68,7 @@ public class Aplikacja
 
             return rob;
         }
-    }
+    }*/
 
     public Bitmap Binarization(Bitmap btmp)
     {
@@ -113,9 +113,9 @@ public class Aplikacja
         int height = btmp.Height;
         int width = btmp.Width;
 
-        for (int x = 1; x < width - 1; x++)                  //Faza 0
+        for (int x = 1; x < height - 1; x++)                  //Faza 0
         {
-            for (int y = 1; y < height - 1; y++)
+            for (int y = 1; y < width - 1; y++)
             {
                 Color c = btmp.GetPixel(x, y);
                 if (c.R > 0)
@@ -131,50 +131,97 @@ public class Aplikacja
         return btmp;
     }
 
-    public Bitmap Faz1(Bitmap btmp)
+    public Bitmap Faz1(Bitmap btmp, int ph)
     {
-        bool changed = true;
-
         int height = btmp.Height;
         int width = btmp.Width;
 
-        for (int x = 1; x < width - 1; x++)                  //Faza 1-5
+        /*for (int x = 1; x < width - 1; x++)                  //Faza 1-5
         {
             for (int y = 1; y < height - 1; y++)
             {
                 Color c = btmp.GetPixel(x, y);
                 if (c.R == 2)
                 {
-
                     int waga = this.Weight(btmp, x, y);
                     if(this.A1.Contains(waga))
                     {
                         btmp.SetPixel(x, y, Color.White);
-                        changed = true;
+                        this.changed = true;
                     }
 
                     if (this.A2.Contains(waga))
                     {
                         btmp.SetPixel(x, y, Color.White);
-                        changed = true;
+                        this.changed = true;
                     }
 
                     if (this.A3.Contains(waga))
                     {
                         btmp.SetPixel(x, y, Color.White);
-                        changed = true;
+                        this.changed = true;
                     }
 
                     if (this.A4.Contains(waga))
                     {
                         btmp.SetPixel(x, y, Color.White);
-                        changed = true;
+                        this.changed = true;
                     }
 
                     if (this.A5.Contains(waga))
                     {
                         btmp.SetPixel(x, y, Color.White);
-                        changed = true;
+                        this.changed = true;
+                    }
+                }
+            }
+        }*/
+
+        for (int x = 1; x < height - 1; x++)
+        {
+            for (int y = 1; y < width - 1; y++)
+            {
+                Color c = btmp.GetPixel(x, y);
+
+                if(c.R == 2)
+                {
+                    switch(ph)
+                    {
+                        case 1:
+                                    if (this.A1.Contains(Weight(btmp, x, y)))
+                        {
+                            btmp.SetPixel(x, y, Color.FromArgb(c.A, 0, 0, 0));
+                            this.changed = true;
+                        }
+                        break;
+                                case 2:
+                                    if (this.A2.Contains(Weight(btmp, x, y)))
+                        {
+                            btmp.SetPixel(x, y, Color.FromArgb(c.A, 0, 0, 0));
+                            this.changed = true;
+                        }
+                        break;
+                                case 3:
+                                    if (this.A3.Contains(Weight(btmp, x, y)))
+                        {
+                            btmp.SetPixel(x, y, Color.FromArgb(c.A, 0, 0, 0));
+                            this.changed = true;
+                        }
+                        break;
+                                case 4:
+                                    if (this.A4.Contains(Weight(btmp, x, y)))
+                        {
+                            btmp.SetPixel(x, y, Color.FromArgb(c.A, 0, 0, 0));
+                            this.changed = true;
+                        }
+                        break;
+                                case 5:
+                                    if (this.A5.Contains(Weight(btmp, x, y)))
+                        {
+                            btmp.SetPixel(x, y, Color.FromArgb(c.A, 0, 0, 0));
+                            this.changed = true;
+                        }
+                        break;
                     }
                 }
             }
@@ -184,13 +231,23 @@ public class Aplikacja
 
     public Bitmap Thinning(Bitmap btmp)
     {
-        
-        while (this.changed) 
+        //this.changed = false;
+        bool changed = true;
+
+        this.dupa = this.Faz0(btmp);
+        //this.dupa2 = this.Faz1(this.dupa);
+
+        /*while (changed)
         {
-            this.changed = false;
-            this.dupa = this.Faz0(btmp);
-            this.dupa2 = this.Faz1(dupa);
+            changed = false;
+            btmp = Faz0(btmp);
+
+            for (int i = 1; i < 6; i++)
+            {
+
+                btmp = Faz1(btmp, i);
+            }
+        }*/
+            return this.dupa;
         }
-        return this.dupa2;
-    }
 }
